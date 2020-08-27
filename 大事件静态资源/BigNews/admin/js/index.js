@@ -1,0 +1,9 @@
+$(function(){
+  $.ajax({
+    type:"get",
+    url:"http://localhost:8080/api/v1/admin/user/info",
+    success:function(info){
+      console.log(123);
+    }
+  })
+})
