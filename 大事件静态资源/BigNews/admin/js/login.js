@@ -10,9 +10,10 @@ $(function(){
         $("#myModal").modal('show')
         $(".modal-body p").text(info.msg)
         if(info.code ===200){
-          window.localStorage.setItem("token", backData.token);
+          window.localStorage.setItem("token", info.token);
           $('#myModal').on('hidden.bs.modal', function (e) {
-            location.herf ="./index.html"
+            console.log(123);
+            location.href ="./index.html"
           })
         }
       }
