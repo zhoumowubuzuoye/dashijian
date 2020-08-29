@@ -15,7 +15,16 @@ $(function(){
   })
   $exit.on("click",function(){
     localStorage.removeItem("token")
-    location.href = "./login.html"
+    location.href="./login.html"
   })
-  
+  $(".level01").on("click",function(){
+    $(this).addClass("active").siblings("div").removeClass("active")
+    if($(this).index()===1){
+      $(" .level02").slideToggle()
+      $(this).find("b").toggleClass("rotate0")
+    }
+  })
+  $(".level02 li").on('click',function(){
+    $(this).addClass("active").siblings().removeClass("active")
+  })
 })
