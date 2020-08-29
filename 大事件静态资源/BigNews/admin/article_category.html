@@ -31,14 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>奇趣事</td>
-                        <td>funny</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:void(0)" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
+                    
                 </tbody>
                 <tfoot>
                     <tr>
@@ -51,5 +44,66 @@
             </table>
         </div>
     </div>
+    <!-- 小的模态框 -->
+    <div class="modal fade" id="smallmodel" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">删除爱好</h4>
+            </div>
+            <div class="modal-body">
+              <p>是否删除该爱好&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary suredel">确定删除</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <!-- 大的模态框 -->
+      <div class="modal fade" id="bigmodel" tabindex="-1" role="dialog">
+        <div class="modal-dialog " role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <form class="">
+                
+                    <input name ="id" type="text" class="form-control" id="arcName" placeholder="id">
+                  
+                <div class="form-group">
+                  <label for="">文章分类名称:</label>
+                  <input name ="name" type="text" class="form-control" id="arcName" placeholder="文章分类名称">
+                </div>
+                <div class="form-group">
+                  <label for="">文章分类别名:</label>
+                  <input name ="slug" type="text" class="form-control" id="arcClass" placeholder="文章分类别名">
+                </div>
+              </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary sureedit">确定提交</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+<script type="text/html" id="tel">
+    {{each data v i}}
+    <tr>
+        <td>{{v.name}}</td>
+        <td>{{v.slug}}</td>
+        <td class="text-center">
+            <a href="javascript:void(0)" data-toggle="modal" class=" btn btn-info btn-xs editbtn" index-id="{{v.id}}">编辑</a>
+            <a href="javascript:void(0)" class="delbtn btn btn-danger btn-xs" index-id="{{v.id}}">删除</a>
+        </td>
+    </tr>
+    
+    {{/each}}
 
+
+</script>
+<script src="js/article_category.js"></script>
 </html>
