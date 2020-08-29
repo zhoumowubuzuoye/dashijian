@@ -10,7 +10,7 @@ $(function(){
         $("#myModal").modal('show')
         $(".modal-body p").text(info.msg)
         if(info.code ===200){
-          window.localStorage.setItem("token", info.token);
+          localStorage.setItem("token",info.token)
           $('#myModal').on('hidden.bs.modal', function (e) {
             console.log(123);
             location.href ="./index.html"
