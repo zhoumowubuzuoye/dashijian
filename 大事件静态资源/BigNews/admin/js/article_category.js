@@ -1,96 +1,70 @@
-$(function () {
-  function newArc(){
-    $.ajax({
-      type: "get",
-      url: "http://localhost:8080/api/v1/admin/category/list",
-      success:function(info){
-        data = info.data
-        var str = template("tel",info)
-        $("tbody").html(str)
-        console.log(data);
-      }
-    })
-  }
-  var num 
-  var data
-  var $arcName =$("[name=name")
-  var $arcClass = $("[name=slug]")
-  var $arcId =$("[name=id]")
-  newArc()
-  
-  $("tbody").on("click",".delbtn",function(){
-    $('#smallmodel').modal('show')
-    num = $(this).attr("index-id")
+$(function(){
+ function rander(){
+  $.ajax({
+    url:"http://localhost:8080/api/v1/admin/category/list",
+    success:function(info){
+      // console.log(info);
+      var str =template("tel",info)
+      $("tbody").html(str)
+    }
   })
-    $(".suredel").on("click",function(){
-      $.ajax({
-        type:"post",
-        url:"http://localhost:8080/api/v1/admin/category/delete",
-        data:{
-          id:num
-        },
-        success:function(){
-          newArc()
-          $('#smallmodel').modal('hide')
-        }
-      })
-    })
-    $("tbody").on("click",".editbtn",function(){
-      $("#bigmodel").modal("show").find("h4").text("修改爱好")
-      num = $(this).attr("index-id")
-      console.log(num);
-      for(var i = 0 ; i < data.length; i++){
-        if(data[i].id==num){
-          console.log(i);
-          $arcName.val(data[i].name) 
-          $arcClass.val(data[i].slug)
-          $arcId.val(num)
-          break
+ }
+ rander()
+ $("#bigmodel").on("shown.bs.modal",function(e){
+   console.log(e.relatedTarget);
+   if(e.relatedTarget.id=="xinzengfenlei"){
+    $(this).find("h4").text("新建文章")
+    $("form")[0].reset()
+    $("[name=id]").val("")
+   }else{
+    $(this).find("h4").text("修改文章")
+    $.ajax({
+      url:"http://localhost:8080/api/v1/admin/category/search",
+      data:{
+        id:$(e.relatedTarget).data("id")
+      },
+      success:function(info){
+        console.log(info);
+        if(info.code ==200){
+          for(var k in info.data[0]){
+            console.log(info.data[0] );
+            $(`form [name=${k}]`).val(info.data[0][k])
+          }
         }
       }
     })
-    $(".sureedit").on("click",function(){
-      console.log($("form").serialize());
-      if($arcId.val()==""){
-        $.ajax({
-          type:"post",
-          url:"http://localhost:8080/api/v1/admin/category/add",
-          data:$("form").serialize(),
-          success:function(info){
-            console.log(info);
-            if(info.code == 201){
-              newArc()
-            }else{
-              alert("请新建文章分类")
-            }
-        },
-        complete:function(){
-          $("#bigmodel").modal("hide")
-        }
-        })
-      }else{
-        $.ajax({
-          type:"post",
-          url:"http://localhost:8080/api/v1/admin/category/edit",
-          data:$("form").serialize(),
-          success:function(info){
-            if(info.code == 200){
-              newArc()
-            }else{
-              alert("请修改文章分类")
-            }
-        },
-        complete:function(){
-          $("#bigmodel").modal("hide")
-        }
-        })
+   }
+ })
+ $(".sureedit").on("click",function(){
+   $.ajax({
+     type:"post",
+     url:$("[name=id]").val()?"http://localhost:8080/api/v1/admin/category/edit":"http://localhost:8080/api/v1/admin/category/add",
+     data:$("form").serialize(),
+     success:function(info){
+      console.log(info);
+      rander()
+      $("#bigmodel").modal("hide")
+     }
+   })
+ })
+ $("#smallmodel").on("shown.bs.modal",function(e){
+  console.log(e.relatedTarget);
+   window.smallmodelId = $(e.relatedTarget).data("id")
+ })
+ $(".suredel").on("click",function(){
+   $.ajax({
+     type:"post",
+     url:"http://localhost:8080/api/v1/admin/category/delete",
+     data:{
+       id:smallmodelId
+     },
+     success:function(info){
+      console.log(info);
+      if(info.code==204){
+        rander()
+        $("#smallmodel").modal("hide")
       }
-   
-     
-    })
-    
-    $("tfoot #xinzengfenlei").on("click",function(){
-      document.querySelector('form').reset()
-      $("#bigmodel").modal("show").find("h4").text("新建分类")
-    })
+     }
+   })
+ })
 })
