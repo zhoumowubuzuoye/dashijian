@@ -51,19 +51,46 @@ $(function () {
     })
     $(".sureedit").on("click",function(){
       console.log($("form").serialize());
-      $.ajax({
-        type:"post",
-        url:"http://localhost:8080/api/v1/admin/category/edit",
-        data:$("form").serialize(),
-        success:function(info){
-          if(info.code == 200){
-            newArc()
-            
-          }
+      if($arcId.val()==""){
+        $.ajax({
+          type:"post",
+          url:"http://localhost:8080/api/v1/admin/category/add",
+          data:$("form").serialize(),
+          success:function(info){
+            console.log(info);
+            if(info.code == 201){
+              newArc()
+            }else{
+              alert("请新建文章分类")
+            }
+        },
         complete:function(){
           $("#bigmodel").modal("hide")
         }
-      })
+        })
+      }else{
+        $.ajax({
+          type:"post",
+          url:"http://localhost:8080/api/v1/admin/category/edit",
+          data:$("form").serialize(),
+          success:function(info){
+            if(info.code == 200){
+              newArc()
+            }else{
+              alert("请修改文章分类")
+            }
+        },
+        complete:function(){
+          $("#bigmodel").modal("hide")
+        }
+        })
+      }
+   
+     
     })
-
+    
+    $("tfoot #xinzengfenlei").on("click",function(){
+      document.querySelector('form').reset()
+      $("#bigmodel").modal("show").find("h4").text("新建分类")
+    })
 })
