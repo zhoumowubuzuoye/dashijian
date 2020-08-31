@@ -8,8 +8,10 @@ $(function(){
     success:function(info){
       console.log(info);
       if(info.code===200){
-        $usepic.attr("src","http://localhost:8080/icon.jpg")
-        $header.attr("src","http://localhost:8080/icon.jpg")
+        console.log(info);
+        $(".user_info span").html(`欢迎&nbsp;&nbsp;${info.data.nickname}`)
+        $usepic.attr("src",info.data.userPic)
+        $header.attr("src",info.data.userPic)
       }
     }
   })
