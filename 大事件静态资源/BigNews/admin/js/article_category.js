@@ -10,6 +10,7 @@ $(function(){
   })
  }
  rander()
+ console.log($("#bigmodel")[0]);
  $("#bigmodel").on("shown.bs.modal",function(e){
    console.log(e.relatedTarget);
    if(e.relatedTarget.id=="xinzengfenlei"){
