@@ -44,6 +44,7 @@ $(function () {
       data: data,
       success: function (info) {
         console.log(info);
+        history.back()
       }
     })
   })
